@@ -44,6 +44,14 @@ public class ServiceMsgIOCenter<T extends PubsubProviderClient, S extends Genera
         this.subChannelName = subChannelName;
     }
 
+    protected String getSubscribeChannel(){
+        return this.subChannelName;
+    }
+
+    protected String getPublishChannel(){
+        return this.pubChannelName;
+    }
+
     protected void subscribeToChannel(){
         if(t != null && subChannelName != null)
             t.subscribeToChannel(subChannelName, s);
@@ -56,6 +64,12 @@ public class ServiceMsgIOCenter<T extends PubsubProviderClient, S extends Genera
             t.publishToChannel(pubChannelName, message, s);
         else
             Log.e(TAG, "PubsubProviderClient or PubChannel is null");
+    }
+
+    protected void publishToAnotherChannel(String anotherPubChannelName, Message message){
+        if(t != null){
+            t.publishToChannel(anotherPubChannelName, message, s);
+        }
     }
 
     public class BinderMsgIO extends Binder{
@@ -72,6 +86,14 @@ public class ServiceMsgIOCenter<T extends PubsubProviderClient, S extends Genera
             setPublishChannel(channelName);
         }
 
+        public String getSubChannel(){
+            return getSubscribeChannel();
+        }
+
+        public String getPubChannel(){
+            return getPublishChannel();
+        }
+
         public void setPubsubCallback(S pubsubCallback){
             setPubsubCallbackClass(pubsubCallback);
         }
@@ -80,8 +102,12 @@ public class ServiceMsgIOCenter<T extends PubsubProviderClient, S extends Genera
             subscribeToChannel();
         }
 
-        public void pubToChannel(Message message){
+        public void pubToChannel(Message message) {
             publishToChannel(message);
+        }
+
+        public void pubToAnotherChannel(String anotherChannelName, Message message){
+            pubToAnotherChannel(anotherChannelName, message);
         }
     }
 }
