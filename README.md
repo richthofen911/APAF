@@ -7,5 +7,5 @@ Android Pubsub Application Framwork
 ⋅ create a class implementing the PubsubProviderClient interface in this framework<br>
 ⋅ create a service extending the ServiceMsgIOCenter in this framework<br>
 ⋅ after service bound:<br>
-  1). must call setPubsubProviderClient<br>
-  2). must call setSubChannel/setPubChannel before calling subToChannel/pubToChannel<br>
+  &nbsp;&nbsp;&nbsp;1). must call setPubsubProviderClient<br>
+  &nbsp;&nbsp;&nbsp;2). must call setSubChannel/setPubChannel before calling subToChannel/pubToChannel<br>
